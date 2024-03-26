@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -43,8 +44,20 @@ public class MainActivity extends AppCompatActivity {
         items.add(new Item("Rahma Laksita","12250124357",R.drawable.rahma));
         items.add(new Item("Surya Hidayatullah Firdaus","12250111759",R.drawable.surya));
 
+        MyAdapter adapter = new MyAdapter(this, items);
+        adapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Item item) {
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                intent.putExtra("name", item.getNama());
+                intent.putExtra("nim", item.getNim());
+                intent.putExtra("image", item.getImage());
+                startActivity(intent);
+            }
+        });
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyAdapter(getApplicationContext(),items));
+        recyclerView.setAdapter(adapter);
 
     }
 }
